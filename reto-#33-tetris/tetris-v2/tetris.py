@@ -18,7 +18,6 @@ def tetris():
                 ["🔲", "🔲", "🔲", "🔲", "🔲", "🔲", "🔲", "🔲", "🔲", "🔲"],
                 ["🔲", "🔲", "🔲", "🔲", "🔲", "🔲", "🔲", "🔲", "🔲", "🔲"],
                 ["🔲", "🔲", "🔲", "🔲", "🔲", "🔲", "🔲", "🔲", "🔲", "🔲"],
-                ["🔲", "🔲", "🔲", "🔲", "🔲", "🔲", "🔲", "🔲", "🔲", "🔲"],
                 ["🔲", "🔲", "🔲", "🔲", "🔲", "🔲", "🔲", "🔲", "🔲", "🔲"]]
     
     print_screen(screen)
@@ -33,21 +32,20 @@ def tetris():
             break
         elif event.event_type == keyboard.KEY_DOWN:
             if event.name == "down":
-                (screen, rotation) = move_piece(screen, Movement_DOWN, rotation)
+                (screen, rotation) = move_piece(screen, Movement.DOWN, rotation)
             elif event.name == "right":
-                (screen, rotation) = move_piece(screen, Movement_RIGHT, rotation)    
+                (screen, rotation) = move_piece(screen, Movement.RIGHT, rotation)    
             elif event.name == "left":
-                (screen, rotation) = move_piece(screen, Movement_LEFT, rotation)    
+                (screen, rotation) = move_piece(screen, Movement.LEFT, rotation)    
             elif event.name == "space":
-                (screen, rotation) = move_piece(screen, Movement_ROTATE, rotation)
-                
-                
+                (screen, rotation) = move_piece(screen, Movement.ROTATE, rotation)
+                    
 def move_piece(screen: list, movement: Movement, rotation: int) -> (list, int):
     
     new_screen = [["🔲"] * 10 for _ in range(10)]
     
     rotation_item = 0
-    rotations = [   [(0, 0), (0, 0), (0, 0), (0, 0)],
+    rotations = [   [(1, 1), (0, 0), (-2, 0), (-1, -1)],
                     [(0, 1), (-1, 0), (0, -1), (1, -2)],
                     [(0, 2), (1, 1), (-1, 1), (-2, 0)],
                     [(0, 1), (1, 0), (2, -1), (1, -2)]]
@@ -58,6 +56,7 @@ def move_piece(screen: list, movement: Movement, rotation: int) -> (list, int):
     
     for row_index, row in enumerate(screen):
         for column_index, item in enumerate(row):
+            
             if item == "🔳": 
                 
                 new_row_index = 0
@@ -74,8 +73,8 @@ def move_piece(screen: list, movement: Movement, rotation: int) -> (list, int):
                         new_row_index = row_index 
                         new_column_index = column_index - 1    
                     case Movement.ROTATE:
-                        new_row_index = row_index + rotations[new_rotation][0]
-                        new_column_index = column_index + rotations[new_rotation][1]
+                        new_row_index = row_index + rotations[new_rotation][rotation_item][0]
+                        new_column_index = column_index + rotations[new_rotation][rotation_item][1]
                         rotation_item += 1
 
                 if new_row_index > 9 or new_column_index > 9 or new_column_index < 0:
