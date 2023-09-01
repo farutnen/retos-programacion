@@ -66,8 +66,8 @@ houses = {
 for hat_question in hat_questions:
     
     print(hat_question.question)
-for hat_answers in hat_question.answers:
-    print(hat_answers[0])
+    for hat_answers in hat_question.answers:
+        print(hat_answers[0])
     
     house = hat_question.answers[get_answer() - 1][1]
     houses[house] += 1
